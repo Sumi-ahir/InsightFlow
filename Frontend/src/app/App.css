@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+/* crome,edge,safari */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+/* Firefox */
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+/* IE and Edge */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+}
