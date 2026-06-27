@@ -2,17 +2,15 @@
 
 🚀 A full-stack AI-powered chat platform with authentication, real-time messaging, and intelligent chat management.
 
----
 
 ##  Live Demo
  https://your-deployment-link.com
 
----
 
 ##  Screenshots
 
 ###  Login Page
-<img width="1468" height="886" alt="image" src="https://github.com/user-attachments/assets/b88df805-ef5f-4960-9ff2-a4ea46345c3d" />
+<img width="1842" height="872" alt="image" src="https://github.com/user-attachments/assets/26206d77-83c6-428d-943a-a4a7ff13fa71" />
 
 ###  AI Response View
 <img width="1908" height="902" alt="image" src="https://github.com/user-attachments/assets/8a739844-07eb-42fe-8274-a3997b4ea264" />
@@ -63,8 +61,6 @@
 ---
 
 
----
-
 ## 🌟 Key Highlights
 
  Production-level authentication system  
@@ -73,7 +69,6 @@
  Scalable chat design  
  Ready for SaaS expansion  
 
----
 
 ##  Author
 
