@@ -1,0 +1,23 @@
+[33mcommit 6eb6302c191fcca8632c16777058c1beed5fd50b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: sumita <sumi.sparkal@gmail.com>
+Date:   Mon Jun 29 10:46:24 2026 +0530
+
+    Remove .env from git
+
+[33mcommit 606ddd805492d0e8ff8095549b06e60584af2953[m
+Author: sumita <sumi.sparkal@gmail.com>
+Date:   Mon Jun 29 10:23:23 2026 +0530
+
+    mail
+
+[33mcommit 933ec614c3792cca2106c405d6f667532b8a9e70[m
+Author: sumita <sumi.sparkal@gmail.com>
+Date:   Sun Jun 28 09:10:26 2026 +0530
+
+    Add passport dependency
+
+[33mcommit 95cfb028bb930a3326f89127a240fc4b7e489fdf[m
+Author: sumita <sumi.sparkal@gmail.com>
+Date:   Sun Jun 28 01:05:45 2026 +0530
+
+    insightFlow - ai
