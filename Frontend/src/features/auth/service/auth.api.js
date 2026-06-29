@@ -18,7 +18,7 @@ export async function login({ email, password }) {
   return response.data;
 }
 export async function getMe() {
-  const response = await api.get("/api/auth/me");
+  const response = await api.get("/api/auth/me", { withCredentials: true })
   return response.data;
 }
 export async function logout() {

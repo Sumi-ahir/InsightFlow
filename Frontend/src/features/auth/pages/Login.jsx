@@ -132,9 +132,9 @@ const Login = () => {
           </div>
 
           {/* ERROR */}
-          {error && (
+          {/* {error && (
             <p className="text-red-400 text-sm mb-3">{error}</p>
-          )}
+          )} */}
 
           {/* BUTTON */}
           <button
