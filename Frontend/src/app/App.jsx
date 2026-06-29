@@ -15,7 +15,7 @@ useEffect(() => {
   const init = async () => {
     try {
       // Google redirect પછી cookie settle થવા માટે થોડી રાહ
-      await new Promise((res) => setTimeout(res, 500));
+      await new Promise((res) => setTimeout(res));
 
       await auth.handleGetMe();
 

@@ -33,12 +33,14 @@ export async function register(req, res) {
     );
     // email for verification
     try {
+      const verifyLink = `${process.env.BACKEND_URL}/api/auth/verify-email?token=${emailVerificationToken}`;
+
       await sendEmail({
         to: cleanEmail,
         subject: "Welcome to InsightFlow!",
         html: `<p>Hi ${username},</p>
         <p>Please verify your email</p>
-        <a href='http://localhost:5000/api/auth/verify-email?token=${emailVerificationToken}'>Verify Email</a>`,
+       <a href="${verifyLink}">Verify Email</a>`
       });
       console.log("EMAIL FUNCTION CALLED");
     } catch (err) {
@@ -97,13 +99,13 @@ export async function verifyEmail(req, res) {
 export async function login(req, res) {
   try {
     const { email, password } = req.body;
-
-    const user = await userModle.findOne({ email }).select("+password");
+    const cleanEmail = email.trim().toLowerCase();
+    const user = await userModle.findOne({ email: cleanEmail }).select("+password");
 
     if (!user) {
       return res.status(404).json({ message: "Invalid email" });
     }
-
+    
     const isPasswordValid = await user.comparePassword(password);
 
     if (!isPasswordValid) {
@@ -116,22 +118,20 @@ export async function login(req, res) {
         .json({ message: "Please verify your email first" });
     }
 
-    console.log("JWT_SECRET:", process.env.JWT_SECRET);
     //  CREATE TOKEN
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: false,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+ res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+});
     return res.status(200).json({
       success: true,
       message: "Login successful",
-      token,
       user: {
         id: user._id,
         email: user.email,
@@ -140,17 +140,19 @@ export async function login(req, res) {
   } catch (err) {
     console.log("LOGIN ERROR:", err);
 
-    return res.status(500).json({
-      message: "Server error",
-    });
+  return res.status(500).json({
+ message:"Server error",
+ error:err.message
+});
   }
 }
 // logout
 export const logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    sameSite: "lax",
-    secure: false,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   return res.status(200).json({
@@ -211,13 +213,13 @@ export const googleCallback = async (req, res) => {
         10
       );
 
-      user = await userModle.create({
-        email,
-        googleId: id,
-        username: displayName,
-        profilePic,
-        verified: true,
-      });
+     user = await userModle.create({
+  email,
+  googleId: id,
+  username,
+  profilePic,
+  verified: true,
+});
     }
 
     const token = jwt.sign(
@@ -226,11 +228,12 @@ export const googleCallback = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-    });
+ res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+});
 
     return res.redirect("http://localhost:5173/dashboard");
 
