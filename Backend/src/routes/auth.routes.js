@@ -25,7 +25,7 @@ authRouter.get(
      "/google/callback",
      passport.authenticate("google", {
     session: false,
-    failureRedirect: "https://insight-flow-ai-git-main-sumi-ahirs-projects.vercel.app/login",
+   failureRedirect: `${config.FRONTEND_URL}/login`,
   }),
     googleCallback,
 );
