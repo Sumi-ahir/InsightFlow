@@ -32,20 +32,27 @@ export async function register(req, res) {
       { expiresIn: "1d" },
     );
     // email for verification
-    try {
-      const verifyLink = `${process.env.BACKEND_URL}/api/auth/verify-email?token=${emailVerificationToken}`;
+  try {
+  await sendEmail({
+    to: cleanEmail,
+    subject: "Verify Your Email",
+    html: `
+      <h2>Welcome ${username}</h2>
+      <p>Please verify your email.</p>
 
-      await sendEmail({
-        to: cleanEmail,
-        subject: "Welcome to InsightFlow!",
-        html: `<p>Hi ${username},</p>
-        <p>Please verify your email</p>
-       <a href="${verifyLink}">Verify Email</a>`
-      });
-      console.log("EMAIL FUNCTION CALLED");
-    } catch (err) {
-      console.log("Email error:", err.message);
-    }
+      <a href="${process.env.BACKEND_URL}/api/auth/verify-email?token=${emailVerificationToken}">
+        Verify Email
+      </a>
+    `,
+  });
+} catch (err) {
+  console.error("Email sending failed:", err);
+
+  return res.status(500).json({
+    success: false,
+    message: "Unable to send verification email.",
+  });
+}
 
     return res.status(201).json({
       message: "User registered successfully!",

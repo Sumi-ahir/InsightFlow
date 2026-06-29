@@ -9,13 +9,20 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendEmail = async ({ to, subject, html }) => {
-   console.log("EMAIL FUNCTION CALLED");
+  try {
+    console.log("EMAIL FUNCTION CALLED");
 
-  await transporter.sendMail({
-     from: `"InsightFlow AI" <${process.env.GOOGLE_USER}>`,
-    to,
-    subject,
-    html,
-  });
-    console.log("Email Sent Successfully");
+    const info = await transporter.sendMail({
+      from: `"InsightFlow AI" <${process.env.GOOGLE_USER}>`,
+      to,
+      subject,
+      html,
+    });
+
+    console.log("Email Sent Successfully:", info.messageId);
+    return info;
+  } catch (error) {
+    console.error("Email Error:", error);
+    throw error;
+  }
 };
