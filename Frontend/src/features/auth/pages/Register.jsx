@@ -161,6 +161,23 @@ const Register = () => {
         {/* FORM */}
         <form onSubmit={handleSubmit} className="space-y-5">
 
+        {/* USERNAME */}
+          <div>
+            <input
+              type="text"
+              name="username"
+              value={form.username}
+              onChange={handleChange}
+              className={getInputClass('username')}
+              placeholder="Your name"
+            />
+            {errors.username && (
+              <p className="mt-1 text-xs text-red-400">
+                {errors.username}
+              </p>
+            )}
+          </div>
+
           {/* EMAIL */}
           <div>
             <input
@@ -178,22 +195,7 @@ const Register = () => {
             )}
           </div>
 
-          {/* USERNAME */}
-          <div>
-            <input
-              type="text"
-              name="username"
-              value={form.username}
-              onChange={handleChange}
-              className={getInputClass('username')}
-              placeholder="Your display name"
-            />
-            {errors.username && (
-              <p className="mt-1 text-xs text-red-400">
-                {errors.username}
-              </p>
-            )}
-          </div>
+          
 
           {/* PASSWORD */}
           <div className="relative">
@@ -209,7 +211,7 @@ const Register = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-3 sm:top-2.5 text-gray-500"
+              className="absolute cursor-pointer right-3 top-3 sm:top-2.5 text-gray-500"
             >
               {showPassword ? (
                 <EyeOff size={18} />
