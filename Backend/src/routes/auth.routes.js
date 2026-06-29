@@ -8,7 +8,6 @@ import { config } from '../config/config.js';
 
 authRouter.post('/register', registerValidator, register);
 authRouter.post('/login',loginValidator,login)
-// authRouter.get('/verify-email',verifyEmail)
 authRouter.get('/me',authUser,getMe)
 authRouter.post('/logout',logout)
 

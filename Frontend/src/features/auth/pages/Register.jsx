@@ -78,7 +78,7 @@ const Register = () => {
       await register(form)
 
       setSuccessMsg(
-        'Account created successfully! Please verify your email.'
+        'Account created successfully!'
       )
       setTimeout(() => {
         navigate('/login')
