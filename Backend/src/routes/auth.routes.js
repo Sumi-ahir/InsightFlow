@@ -1,5 +1,5 @@
 import express from 'express';
-import {register,verifyEmail,login,getMe,logout,googleCallback} from '../controllers/auth.controller.js';
+import {register,login,getMe,logout,googleCallback} from '../controllers/auth.controller.js';
 import { registerValidator,loginValidator } from '../validators/auth.validator.js';
 import { authUser } from '../middleware/auth.middleware.js';
 import passport from '../config/passport.config.js';
@@ -8,7 +8,7 @@ import { config } from '../config/config.js';
 
 authRouter.post('/register', registerValidator, register);
 authRouter.post('/login',loginValidator,login)
-authRouter.get('/verify-email',verifyEmail)
+// authRouter.get('/verify-email',verifyEmail)
 authRouter.get('/me',authUser,getMe)
 authRouter.post('/logout',logout)
 
