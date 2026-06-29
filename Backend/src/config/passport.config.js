@@ -36,4 +36,8 @@ passport.use(
     }
 )
 )
+
+passport._strategies.google.error = function (err) {
+  console.error("GOOGLE FULL ERROR:", err);
+}
 export default passport;

@@ -21,12 +21,31 @@ authRouter.get('/google',
 )
 
 // GOOGLE CALLBACK
-authRouter.get(
-     "/google/callback",
-     passport.authenticate("google", {
-    session: false,
-   failureRedirect: `${config.FRONTEND_URL}/login`,
-  }),
-    googleCallback,
-);
+// authRouter.get(
+//      "/google/callback",
+//      passport.authenticate("google", {
+//     session: false,
+//    failureRedirect: `${config.FRONTEND_URL}/login`,
+//   }),
+//     googleCallback,
+// );
+
+authRouter.get("/google/callback", (req, res, next) => {
+  passport.authenticate("google", (err, user, info) => {
+    console.log("========== GOOGLE CALLBACK ==========");
+    console.log("ERR:", err);
+    console.log("INFO:", info);
+    console.log("USER:", user);
+
+    if (err) {
+      return res.status(500).json({
+        error: err.message,
+        details: err,
+      });
+    }
+
+    req.user = user;
+    next();
+  })(req, res, next);
+}, googleCallback);
 export default authRouter;
