@@ -23,36 +23,37 @@ export async function register(req, res) {
       username,
       email: cleanEmail,
       password,
+      verified: true, 
     });
 
     // token
-    const emailVerificationToken = jwt.sign(
-      { email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" },
-    );
-    // email for verification
-  try {
-  await sendEmail({
-    to: cleanEmail,
-    subject: "Verify Your Email",
-    html: `
-      <h2>Welcome ${username}</h2>
-      <p>Please verify your email.</p>
+    // const emailVerificationToken = jwt.sign(
+    //   { email: user.email },
+    //   process.env.JWT_SECRET,
+    //   { expiresIn: "1d" },
+    // );
+//     // email for verification
+//   try {
+//   await sendEmail({
+//     to: cleanEmail,
+//     subject: "Verify Your Email",
+//     html: `
+//       <h2>Welcome ${username}</h2>
+//       <p>Please verify your email.</p>
 
-      <a href="${process.env.BACKEND_URL}/api/auth/verify-email?token=${emailVerificationToken}">
-        Verify Email
-      </a>
-    `,
-  });
-} catch (err) {
-  console.error("Email sending failed:", err);
+//       <a href="${process.env.BACKEND_URL}/api/auth/verify-email?token=${emailVerificationToken}">
+//         Verify Email
+//       </a>
+//     `,
+//   });
+// } catch (err) {
+//   console.error("Email sending failed:", err);
 
-  return res.status(500).json({
-    success: false,
-    message: "Unable to send verification email.",
-  });
-}
+//   return res.status(500).json({
+//     success: false,
+//     message: "Unable to send verification email.",
+//   });
+// }
 
     return res.status(201).json({
       message: "User registered successfully!",
@@ -63,7 +64,7 @@ export async function register(req, res) {
         email: user.email,
       },
     });
-  } catch (error) {
+  } catch(error) {
     console.log("Register error:", error);
 
     return res.status(500).json({
@@ -73,35 +74,35 @@ export async function register(req, res) {
   }
 }
 // EMAIL VERIFICATION
-export async function verifyEmail(req, res) {
-  const { token } = req.query;
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+// export async function verifyEmail(req, res) {
+//   const { token } = req.query;
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await userModle.findOne({ email: decoded.email });
+//     const user = await userModle.findOne({ email: decoded.email });
 
-    if (!user) {
-      return res.status(400).json({
-        message: "Invalid token",
-        success: false,
-        err: "User not found!",
-      });
-    }
-    user.verified = true;
-    await user.save();
+//     if (!user) {
+//       return res.status(400).json({
+//         message: "Invalid token",
+//         success: false,
+//         err: "User not found!",
+//       });
+//     }
+//     user.verified = true;
+//     await user.save();
 
-    const html = ` 
-        <h1>Email verified successfully!</h1>
-        <p>Your email has been verified , Now you can log in</p>`;
-    res.send(html);
-  } catch (err) {
-    return res.status(400).json({
-      message: "Invalid or Expired token",
-      success: false,
-      err: err.message,
-    });
-  }
-}
+//     const html = ` 
+//         <h1>Email verified successfully!</h1>
+//         <p>Your email has been verified , Now you can log in</p>`;
+//     res.send(html);
+//   } catch (err) {
+//     return res.status(400).json({
+//       message: "Invalid or Expired token",
+//       success: false,
+//       err: err.message,
+//     });
+//   }
+// }
 // LOGIN
 export async function login(req, res) {
   try {
@@ -119,11 +120,11 @@ export async function login(req, res) {
       return res.status(401).json({ message: "Invalid password" });
     }
 
-    if (!user.verified) {
-      return res
-        .status(403)
-        .json({ message: "Please verify your email first" });
-    }
+    // if (!user.verified) {
+    //   return res
+    //     .status(403)
+    //     .json({ message: "Please verify your email first" });
+    // }
 
     //  CREATE TOKEN
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
