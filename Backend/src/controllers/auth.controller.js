@@ -63,12 +63,19 @@ export async function login(req, res) {
       expiresIn: "7d",
     });
 
- res.cookie("token", token, {
+//  res.cookie("token", token, {
+//   httpOnly: true,
+//   secure: process.env.NODE_ENV === "production",
+//   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+//   maxAge: 7 * 24 * 60 * 60 * 1000,
+//    path: "/",
+// });
+res.cookie("token", token, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: true,
+  sameSite: "none",
   maxAge: 7 * 24 * 60 * 60 * 1000,
-   path: "/",
+  path: "/",
 });
     return res.status(200).json({
       success: true,
@@ -169,12 +176,19 @@ export const googleCallback = async (req, res) => {
       { expiresIn: "7d" }
     );
 
- res.cookie("token", token, {
+//  res.cookie("token", token, {
+//   httpOnly: true,
+//   secure: process.env.NODE_ENV === "production",
+//   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+//   maxAge: 7 * 24 * 60 * 60 * 1000,
+//    path: "/",
+// });
+res.cookie("token", token, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: true,
+  sameSite: "none",
   maxAge: 7 * 24 * 60 * 60 * 1000,
-   path: "/",
+  path: "/",
 });
 
    return res.redirect(process.env.FRONTEND_URL + "/dashboard");
