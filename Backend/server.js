@@ -8,9 +8,9 @@ import './src/config/passport.config.js'
 
 const httpServer = http.createServer(app);
 initSocket(httpServer);
-
+console.log(process.env.MONGO_URI);
 connectDB().catch((err) => {
-  console.error("mon/goDB connected failed", err);
+  console.error("mongoDB connected failed", err);
   process.exit(1);
 });
 
